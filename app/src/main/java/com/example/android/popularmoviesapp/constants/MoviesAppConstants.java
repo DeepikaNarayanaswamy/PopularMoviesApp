@@ -25,4 +25,8 @@ public class MoviesAppConstants {
     public static final String JSON_AUTHOR = "author";
     public static final String JSON_CONTENT = "content";
     public static final String URL_VIDEOS = "/videos";
+    public static final String TRAILER = "Trailer";
+    public static final String VIDEO_NAME = "name";
+    public static final String VIDEO_KEY = "key";
+
 }

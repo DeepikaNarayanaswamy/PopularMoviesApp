@@ -2,10 +2,15 @@ package com.example.android.popularmoviesapp.util;
 
 import android.net.Uri;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.example.android.popularmoviesapp.pojo.Movie;
 import com.example.android.popularmoviesapp.constants.MoviesAppConstants;
 import com.example.android.popularmoviesapp.pojo.MovieReview;
+import com.example.android.popularmoviesapp.pojo.MovieTrailer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +37,7 @@ import java.util.List;
 public class MoviesAppHelper {
 
     public static final String LOG_TAG = MoviesAppHelper.class.getSimpleName();
+
     /*
     This method will invoke the movies db api and gets the results based on the
     users preference - Top rated or popular movies
@@ -39,12 +45,12 @@ public class MoviesAppHelper {
     @param : sortby -  Top rated or popular
     @return : List of movies
  */
-    public static List<Movie> fetchMovie(String sortBy){
+    public static List<Movie> fetchMovie(String sortBy) {
 
-        List <Movie> movies = new ArrayList<>();
+        List<Movie> movies = new ArrayList<>();
         BufferedReader reader = null;
         HttpURLConnection urlConnection = null;
-        Uri builtURL = Uri.parse(MoviesAppConstants.MOVIEDB_URL+sortBy).buildUpon().
+        Uri builtURL = Uri.parse(MoviesAppConstants.MOVIEDB_URL + sortBy).buildUpon().
                 appendQueryParameter(MoviesAppConstants.API_KEY, MoviesAppConstants.API_KEY_VALUE).build();
         URL url = null;
         String moviesJsonStr;
@@ -100,12 +106,13 @@ public class MoviesAppHelper {
 
         }
     }
+
     /*
         * This method parses the json string and gets the list of movies
         * @param : moviesJsonStr
         * @return : List of movies
      */
-    private static List<Movie> getMoviesList(String moviesJsonStr){
+    private static List<Movie> getMoviesList(String moviesJsonStr) {
         List<Movie> moviesList = new ArrayList<>();
         try {
             // Check if the json string has value.
@@ -126,30 +133,29 @@ public class MoviesAppHelper {
                     moviesList.add(movie);
                 }
             }
-        }catch(JSONException e){
-            Log.e(LOG_TAG,"Some error has occurred"+e.getMessage());
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, "Some error has occurred" + e.getMessage());
             e.printStackTrace();
         }
         return moviesList;
     }
 
-    public static String getYear(String strDate){
+    public static String getYear(String strDate) {
 
-        String [] dateArray = strDate.split("-");
-        return  dateArray[0];
+        String[] dateArray = strDate.split("-");
+        return dateArray[0];
 
     }
 
 
-
     // This function is to get the reviews of a movie
 
-    public static List<MovieReview> fetchMovieReviews(String movieId){
+    public static List<MovieReview> fetchMovieReviews(String movieId) {
 
-        List <MovieReview> moviesReview = new ArrayList<>();
+        List<MovieReview> moviesReview = new ArrayList<>();
         BufferedReader reader = null;
         HttpURLConnection urlConnection = null;
-        Uri builtURL = Uri.parse(MoviesAppConstants.MOVIEDB_URL+movieId+MoviesAppConstants.URL_REVIEWS).buildUpon().
+        Uri builtURL = Uri.parse(MoviesAppConstants.MOVIEDB_URL + movieId + MoviesAppConstants.URL_REVIEWS).buildUpon().
                 appendQueryParameter(MoviesAppConstants.API_KEY, MoviesAppConstants.API_KEY_VALUE).build();
         URL url = null;
         String movieReviewJsonStr;
@@ -206,6 +212,7 @@ public class MoviesAppHelper {
         }
 
     }
+
     private static List<MovieReview> getMovieReviews(String movieReviewStr) throws JSONException {
 
         List<MovieReview> movieReviews = new ArrayList<MovieReview>();
@@ -218,7 +225,7 @@ public class MoviesAppHelper {
                 JSONObject reviewObject = array.getJSONObject(i);
                 review.setMauthor(reviewObject.getString(MoviesAppConstants.JSON_AUTHOR));
                 review.setMreviewContent(reviewObject.getString(MoviesAppConstants.JSON_CONTENT));
-                Log.v("Review authro",review.getMauthor());
+                Log.v("Review authro", review.getMauthor());
                 movieReviews.add(review);
             }
 
@@ -230,14 +237,14 @@ public class MoviesAppHelper {
 
     // Fetch movie trailer videos
 
-    public static void fetchMovieTrailers (String movieId) {
-
+    public static List<MovieTrailer> fetchMovieTrailers(String movieId) {
+        List<MovieTrailer> trailers = new ArrayList<>();
         BufferedReader reader = null;
         HttpURLConnection urlConnection = null;
         Uri builtURL = Uri.parse(MoviesAppConstants.MOVIEDB_URL + movieId + MoviesAppConstants.URL_VIDEOS).buildUpon().
                 appendQueryParameter(MoviesAppConstants.API_KEY, MoviesAppConstants.API_KEY_VALUE).build();
         URL url = null;
-        String movieReviewJsonStr;
+        String movieTrailerJsonStr;
         try {
             url = new URL(builtURL.toString());
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -265,8 +272,8 @@ public class MoviesAppHelper {
                 // Stream was empty.  No point in parsing.
                 //return null;
             }
-            movieReviewJsonStr = buffer.toString();
-            //moviesReview = getMovieReviews(movieReviewJsonStr);
+            movieTrailerJsonStr = buffer.toString();
+            trailers = getMovieTrailers(movieTrailerJsonStr);
 
         } catch (MalformedURLException e1) {
             e1.printStackTrace();
@@ -288,5 +295,54 @@ public class MoviesAppHelper {
 
 
         }
+        return trailers;
+    }
+
+
+
+    public static List<MovieTrailer> getMovieTrailers(String movieTrailerJsonStr){
+        List<MovieTrailer> movieReviews = new ArrayList<MovieTrailer>();
+        try {
+            if (movieTrailerJsonStr != null) {
+                JSONObject forecastJson = new JSONObject(movieTrailerJsonStr);
+                JSONArray array = forecastJson.getJSONArray(MoviesAppConstants.JSON_RESULTS_KEY);
+
+                for (int i = 0; i < array.length(); i++) {
+                    MovieTrailer trailer = new MovieTrailer();
+                    JSONObject trailerObject = array.getJSONObject(i);
+                    trailer.setVideoId(trailerObject.getString(MoviesAppConstants.JSON_MOVIE_ID));
+                    trailer.setVideoName(trailerObject.getString(MoviesAppConstants.VIDEO_NAME));
+                    trailer.setVideoKey(trailerObject.getString(MoviesAppConstants.VIDEO_KEY));
+                    Log.v("Video id", trailer.getVideoId());
+                    movieReviews.add(trailer);
+                }
+
+            }
+        }catch (Exception e){
+            Log.e("Error:",e.getMessage());
+        }
+        Log.v("#reviews=",movieReviews.size()+"");
+        return movieReviews;
+
+    }
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.AT_MOST);
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
     }
 }
