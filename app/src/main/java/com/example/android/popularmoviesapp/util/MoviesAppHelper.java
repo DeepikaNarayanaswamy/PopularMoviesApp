@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.android.popularmoviesapp.pojo.Movie;
 import com.example.android.popularmoviesapp.constants.MoviesAppConstants;
+import com.example.android.popularmoviesapp.pojo.MovieReview;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -116,6 +117,7 @@ public class MoviesAppHelper {
 
                     Movie movie = new Movie();
                     JSONObject OBJ = array.getJSONObject(i);
+                    movie.setmId(OBJ.getInt(MoviesAppConstants.JSON_MOVIE_ID));
                     movie.setmPosterPath(OBJ.getString(MoviesAppConstants.JSON_POSTER_PATH_KEY));
                     movie.setmVoteAverage(OBJ.getDouble(MoviesAppConstants.JSON_VOTE_AVG_KEY));
                     movie.setmOriginalTitle(OBJ.getString(MoviesAppConstants.JSON_ORIGINAL_TITLE_KEY));
@@ -138,4 +140,153 @@ public class MoviesAppHelper {
 
     }
 
+
+
+    // This function is to get the reviews of a movie
+
+    public static List<MovieReview> fetchMovieReviews(String movieId){
+
+        List <MovieReview> moviesReview = new ArrayList<>();
+        BufferedReader reader = null;
+        HttpURLConnection urlConnection = null;
+        Uri builtURL = Uri.parse(MoviesAppConstants.MOVIEDB_URL+movieId+MoviesAppConstants.URL_REVIEWS).buildUpon().
+                appendQueryParameter(MoviesAppConstants.API_KEY, MoviesAppConstants.API_KEY_VALUE).build();
+        URL url = null;
+        String movieReviewJsonStr;
+        try {
+            url = new URL(builtURL.toString());
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+            Log.i(LOG_TAG, "Connected to the URL");
+            // Read the input stream into a String
+            InputStream inputStream = urlConnection.getInputStream();
+            StringBuffer buffer = new StringBuffer();
+            if (inputStream == null) {
+                // Nothing to do.
+                return null;
+            }
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
+                // But it does make debugging a *lot* easier if you print out the completed
+                // buffer for debugging.
+                buffer.append(line + "\n");
+            }
+
+            if (buffer.length() == 0) {
+                // Stream was empty.  No point in parsing.
+                return null;
+            }
+            movieReviewJsonStr = buffer.toString();
+            moviesReview = getMovieReviews(movieReviewJsonStr);
+
+        } catch (MalformedURLException e1) {
+            e1.printStackTrace();
+        } catch (ProtocolException e1) {
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (final IOException e) {
+                    Log.e(LOG_TAG, "Error closing stream", e);
+                }
+            }
+
+            return moviesReview;
+
+        }
+
+    }
+    private static List<MovieReview> getMovieReviews(String movieReviewStr) throws JSONException {
+
+        List<MovieReview> movieReviews = new ArrayList<MovieReview>();
+        if (movieReviewStr != null) {
+            JSONObject forecastJson = new JSONObject(movieReviewStr);
+            JSONArray array = forecastJson.getJSONArray(MoviesAppConstants.JSON_RESULTS_KEY);
+
+            for (int i = 0; i < array.length(); i++) {
+                MovieReview review = new MovieReview();
+                JSONObject reviewObject = array.getJSONObject(i);
+                review.setMauthor(reviewObject.getString(MoviesAppConstants.JSON_AUTHOR));
+                review.setMreviewContent(reviewObject.getString(MoviesAppConstants.JSON_CONTENT));
+                Log.v("Review authro",review.getMauthor());
+                movieReviews.add(review);
+            }
+
+        }
+        return movieReviews;
+
+    }
+
+
+    // Fetch movie trailer videos
+
+    public static void fetchMovieTrailers (String movieId) {
+
+        BufferedReader reader = null;
+        HttpURLConnection urlConnection = null;
+        Uri builtURL = Uri.parse(MoviesAppConstants.MOVIEDB_URL + movieId + MoviesAppConstants.URL_VIDEOS).buildUpon().
+                appendQueryParameter(MoviesAppConstants.API_KEY, MoviesAppConstants.API_KEY_VALUE).build();
+        URL url = null;
+        String movieReviewJsonStr;
+        try {
+            url = new URL(builtURL.toString());
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+            Log.i(LOG_TAG, "Connected to the URL");
+            // Read the input stream into a String
+            InputStream inputStream = urlConnection.getInputStream();
+            StringBuffer buffer = new StringBuffer();
+            if (inputStream == null) {
+                // Nothing to do.
+                //return null;
+            }
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
+                // But it does make debugging a *lot* easier if you print out the completed
+                // buffer for debugging.
+                buffer.append(line + "\n");
+            }
+
+            if (buffer.length() == 0) {
+                // Stream was empty.  No point in parsing.
+                //return null;
+            }
+            movieReviewJsonStr = buffer.toString();
+            //moviesReview = getMovieReviews(movieReviewJsonStr);
+
+        } catch (MalformedURLException e1) {
+            e1.printStackTrace();
+        } catch (ProtocolException e1) {
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (final IOException e) {
+                    Log.e(LOG_TAG, "Error closing stream", e);
+                }
+            }
+
+
+        }
+    }
 }

@@ -20,4 +20,9 @@ public class MoviesAppConstants {
     public static final String JSON_OVERVIEW_KEY = "overview";
     public static final String JSON_RESULTS_KEY = "results";
     public static final String API_KEY = "api_key";
+    public static final String JSON_MOVIE_ID = "id";
+    public static final String URL_REVIEWS = "/reviews";
+    public static final String JSON_AUTHOR = "author";
+    public static final String JSON_CONTENT = "content";
+    public static final String URL_VIDEOS = "/videos";
 }

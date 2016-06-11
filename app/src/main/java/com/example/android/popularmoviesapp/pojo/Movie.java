@@ -1,5 +1,8 @@
 package com.example.android.popularmoviesapp.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -8,9 +11,11 @@ import java.util.List;
 /**
  * Created by deepika on 5/7/2016.
  */
-public class Movie {
+public class Movie implements Parcelable {
 
+    public Movie(){
 
+    }
 
     private int mId;
 
@@ -153,4 +158,46 @@ public class Movie {
     private int mVoteCount;
 
     private double mVoteAverage;
+    public Movie(Parcel in ) {
+        readFromParcel( in );
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Movie createFromParcel(Parcel in ) {
+            return new Movie( in );
+        }
+
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
+        dest.writeString(mOriginalTitle);
+        dest.writeString(mReleaseDate);
+        dest.writeString(mOverview);
+        dest.writeString(mPosterPath);
+        dest.writeDouble(mVoteAverage);
+    }
+
+    public void readFromParcel(Parcel in){
+
+        // The order in which its written in parcel should be the same as the order in which u read.
+        mId = in.readInt();
+        mOriginalTitle = in.readString();
+        mReleaseDate = in.readString();
+        mOverview = in.readString();
+
+        mPosterPath = in.readString();
+        mVoteAverage = in.readDouble();
+
+    }
 }

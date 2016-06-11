@@ -47,13 +47,10 @@ public class MoviesFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Movie movie = moviesAdapter.getItem(position);
-                    Log.i(LOG_TAG,"Click event of List item ");
+                    Log.i(LOG_TAG,"Posterpath : "+movie.getmPosterPath() );
+
                     Intent invokeDetailActivity = new Intent(getActivity(),MovieDetailActivity.class).
-                            putExtra(MoviesAppConstants.MOVIE_TITLE,movie.getmOriginalTitle())
-                            .putExtra(MoviesAppConstants.MOVIE_RELEASE_YEAR,MoviesAppHelper.getYear(movie.getmReleaseDate()))
-                            .putExtra(MoviesAppConstants.MOVIE_OVERVIEW,movie.getmOverview())
-                            .putExtra(MoviesAppConstants.MOVIE_USER_RATING,movie.getmVoteAverage())
-                            .putExtra(MoviesAppConstants.MOVIE_IMAGE_PATH,movie.getmPosterPath());
+                            putExtra("MovieObject",movie);
 
                     startActivity(invokeDetailActivity);
                 }
