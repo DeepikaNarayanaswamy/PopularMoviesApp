@@ -1,0 +1,71 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.DetailsFragment">
+
+        <LinearLayout
+            android:id="@+id/movieTitlePlaceHolder"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/colorPrimaryDark"
+           >
+
+            <TextView
+                android:id="@+id/movie_title"
+                style="@style/MovieTitle" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/movie_thumbnail"
+
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_below="@id/movieTitlePlaceHolder"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/movie_release_year"
+            android:paddingLeft="5dp"
+            android:paddingBottom="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/movieTitlePlaceHolder"
+            android:layout_toRightOf="@id/movie_thumbnail"
+            android:textColor="#25383C"
+            android:textSize="20sp"
+             />
+
+
+        <TextView
+            android:id="@+id/movie_user_rating"
+            android:paddingLeft="5dp"
+            android:paddingBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="180dp"
+            android:layout_toRightOf="@id/movie_thumbnail"
+            android:textColor="#25383C"
+            android:textSize="20sp" />
+        />
+
+        <TextView
+            android:id="@+id/movie_overview"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/movie_thumbnail"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp"/>
+        />
+    </RelativeLayout>
+</ScrollView>
