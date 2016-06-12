@@ -1,5 +1,6 @@
 package com.example.android.popularmoviesapp;
 
+import android.app.LoaderManager;
 import android.content.ActivityNotFoundException;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -11,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.content.CursorLoader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -38,7 +40,7 @@ import com.squareup.okhttp.Protocol;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-
+import  android.support.v4.content.Loader;
 /**
  * A placeholder fragment containing a simple view.
  */

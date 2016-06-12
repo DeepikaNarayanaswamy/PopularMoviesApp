@@ -2,10 +2,13 @@ package com.example.android.popularmoviesapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,7 @@ import android.widget.GridView;
 
 import com.example.android.popularmoviesapp.adapter.MoviesAdapter;
 import com.example.android.popularmoviesapp.constants.MoviesAppConstants;
+import com.example.android.popularmoviesapp.data.MoviesContract;
 import com.example.android.popularmoviesapp.pojo.Movie;
 import com.example.android.popularmoviesapp.util.MoviesAppHelper;
 
@@ -24,9 +28,10 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MoviesFragment extends Fragment {
+public class MoviesFragment extends Fragment   {
     public static final String LOG_TAG = MoviesFragment.class.getSimpleName();
     MoviesAdapter moviesAdapter;
+
     List<Movie> movies = new ArrayList<>();
 
     public MoviesFragment() {
@@ -60,15 +65,17 @@ public class MoviesFragment extends Fragment {
 
 
 
+
         return rootView;
     }
 
     public void getMovies() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String sort_by = prefs.getString(getString(R.string.pref_sort_by_key), getString(R.string.pref_value_Popular));
+        Log.v("MoviesFragment","getMovies");
 
-        FetchMoviesTask moviesTask = new FetchMoviesTask();
-        moviesTask.execute(sort_by);
+            FetchMoviesTask moviesTask = new FetchMoviesTask();
+            moviesTask.execute(sort_by);
 
     }
 
@@ -90,7 +97,9 @@ public class MoviesFragment extends Fragment {
                 sort_by = params[0];
 
             Log.i(LOG_TAG,"Sorting by "+sort_by);
-            movies = MoviesAppHelper.fetchMovie(sort_by);
+
+                movies = MoviesAppHelper.fetchMovie(sort_by);
+
             return movies;
         }
 
@@ -103,4 +112,14 @@ public class MoviesFragment extends Fragment {
             }
         }
     }
+
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+
+        super.onActivityCreated(savedInstanceState);
+
+    }
+
+
 }

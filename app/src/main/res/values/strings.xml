@@ -62,13 +62,14 @@
     <!-- Strings for sun shine app -->
 
 
-
     <!-- Strings related to Settings -->
 
-    <string name = "pref_label_Popular">Popular</string>
-    <string name = "pref_label_toprated">Top Rated</string>
-    <string name = "pref_value_Popular">popular</string>
-    <string name = "pref_value_toprated">top_rated</string>
+    <string name="pref_label_Popular">Popular</string>
+    <string name="pref_label_toprated">Top Rated</string>
+    <string name="pref_label_favorite">Favorites</string>
+    <string name="pref_value_Popular">popular</string>
+    <string name="pref_value_toprated">top_rated</string>
+    <string name="pref_value_favorite">favorite</string>
 
     <!-- Example settings for Notifications -->
 
@@ -76,11 +77,16 @@
     <string-array name="pref_sort_by_titles">
         <item>@string/pref_label_Popular</item>
         <item>@string/pref_label_toprated</item>
+        <item>@string/pref_label_favorite</item>
     </string-array>
 
     <string-array name="pref_sort_by_list_values">
         <item>@string/pref_value_Popular</item>
         <item>@string/pref_value_toprated</item>
+        <item>@string/pref_value_favorite</item>
     </string-array>
     <string name="pref_sort_by_key">sort_by</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
