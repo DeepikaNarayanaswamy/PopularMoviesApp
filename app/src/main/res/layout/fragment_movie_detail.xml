@@ -17,11 +17,19 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal"
         >
 
         <TextView
             android:id="@+id/movie_title"
-            style="@style/MovieTitle" />
+            style="@style/MovieTitle"
+            android:layout_weight="1"/>
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+
+
+            android:id="@+id/favorite_icon"/>
     </LinearLayout>
     <!-- 2nd level, horizontal orientation, left image and right the details -->
     <LinearLayout
