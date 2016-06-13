@@ -69,9 +69,9 @@ public class MoviesProvider extends ContentProvider{
             case MOVIES : cursor = movieDBHelper.getReadableDatabase().query(MoviesContract.MoviesEntry.TABLE_MOVIES, projection, selection, selectionArgs, null, null, sortOrder);
                             break;
             // Have to complete this
-            /*case MOVIE_ID : cursor = getMovieById(uri,projection,selection,selectionArgs,sortOrder);
-                            break;
-            */default:throw new UnsupportedOperationException("Failed to insert into table"+uri);
+            case MOVIE_ID : cursor = movieDBHelper.getReadableDatabase().query(MoviesContract.MoviesEntry.TABLE_MOVIES, projection, selection, selectionArgs, null, null, sortOrder);
+                               break;
+            default:throw new UnsupportedOperationException("Failed to insert into table"+uri);
         }
         return cursor;
     }

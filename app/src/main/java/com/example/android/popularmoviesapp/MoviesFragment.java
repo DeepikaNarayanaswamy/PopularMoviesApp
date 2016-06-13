@@ -34,6 +34,7 @@ import java.util.List;
 public class MoviesFragment extends Fragment   {
     public static final String LOG_TAG = MoviesFragment.class.getSimpleName();
     MoviesAdapter moviesAdapter;
+    // These columns are for getting the values from the cursor to display the favorite movies
     public static final int COL_MOVIE_ID  = 1;
     public static final int COL_MOVIE_TITLE  = 2;
     public static final int COL_MOVIE_OVERVIEW  = 3;
@@ -85,22 +86,7 @@ public class MoviesFragment extends Fragment   {
 
 
         if (sort_by.equals("favorite")) {
-
-            Cursor cursor = getContext().getContentResolver().query(MoviesContract.MoviesEntry.CONTENT_URI, null,null ,null,null);
-            moviesAdapter.clear();
-            while(cursor.moveToNext()){
-                Movie movie = new Movie();
-                movie.setmId(Integer.parseInt(cursor.getString(COL_MOVIE_ID)));
-                movie.setmOriginalTitle(cursor.getString(COL_MOVIE_TITLE));
-                movie.setmPosterPath(cursor.getString(COL_POSTER_PATH));
-                movie.setmReleaseDate(cursor.getString(COL_MOVIE_RELEASE_DATE));
-                movie.setmOverview(cursor.getString(COL_MOVIE_OVERVIEW));
-                movie.setmVoteAverage(cursor.getDouble(COL_MOVIE_RATING));
-
-                moviesAdapter.add(movie);
-            }
-            cursor.close();
-
+            fetchFavoriteMovies();
         }else {
             FetchMoviesTask moviesTask = new FetchMoviesTask();
             moviesTask.execute(sort_by);
@@ -147,6 +133,23 @@ public class MoviesFragment extends Fragment   {
 
         super.onActivityCreated(savedInstanceState);
 
+    }
+
+    private void fetchFavoriteMovies(){
+        Cursor cursor = getContext().getContentResolver().query(MoviesContract.MoviesEntry.CONTENT_URI, null,null ,null,null);
+        moviesAdapter.clear();
+        while(cursor.moveToNext()){
+            Movie movie = new Movie();
+            movie.setmId(Integer.parseInt(cursor.getString(COL_MOVIE_ID)));
+            movie.setmOriginalTitle(cursor.getString(COL_MOVIE_TITLE));
+            movie.setmPosterPath(cursor.getString(COL_POSTER_PATH));
+            movie.setmReleaseDate(cursor.getString(COL_MOVIE_RELEASE_DATE));
+            movie.setmOverview(cursor.getString(COL_MOVIE_OVERVIEW));
+            movie.setmVoteAverage(cursor.getDouble(COL_MOVIE_RATING));
+
+            moviesAdapter.add(movie);
+        }
+        cursor.close();
     }
 
 
