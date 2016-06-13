@@ -1,5 +1,6 @@
 package com.example.android.popularmoviesapp;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -7,6 +8,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.util.Log;
@@ -31,6 +34,12 @@ import java.util.List;
 public class MoviesFragment extends Fragment   {
     public static final String LOG_TAG = MoviesFragment.class.getSimpleName();
     MoviesAdapter moviesAdapter;
+    public static final int COL_MOVIE_ID  = 1;
+    public static final int COL_MOVIE_TITLE  = 2;
+    public static final int COL_MOVIE_OVERVIEW  = 3;
+    public static final int COL_MOVIE_RATING  =4;
+    public static final int COL_MOVIE_RELEASE_DATE  = 5;
+    public static final int COL_POSTER_PATH  = 6;
 
     List<Movie> movies = new ArrayList<>();
 
@@ -72,11 +81,30 @@ public class MoviesFragment extends Fragment   {
     public void getMovies() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String sort_by = prefs.getString(getString(R.string.pref_sort_by_key), getString(R.string.pref_value_Popular));
-        Log.v("MoviesFragment","getMovies");
+        Log.v("MoviesFragment", "getMovies");
 
+
+        if (sort_by.equals("favorite")) {
+
+            Cursor cursor = getContext().getContentResolver().query(MoviesContract.MoviesEntry.CONTENT_URI, null,null ,null,null);
+            moviesAdapter.clear();
+            while(cursor.moveToNext()){
+                Movie movie = new Movie();
+                movie.setmId(Integer.parseInt(cursor.getString(COL_MOVIE_ID)));
+                movie.setmOriginalTitle(cursor.getString(COL_MOVIE_TITLE));
+                movie.setmPosterPath(cursor.getString(COL_POSTER_PATH));
+                movie.setmReleaseDate(cursor.getString(COL_MOVIE_RELEASE_DATE));
+                movie.setmOverview(cursor.getString(COL_MOVIE_OVERVIEW));
+                movie.setmVoteAverage(cursor.getDouble(COL_MOVIE_RATING));
+
+                moviesAdapter.add(movie);
+            }
+            cursor.close();
+
+        }else {
             FetchMoviesTask moviesTask = new FetchMoviesTask();
             moviesTask.execute(sort_by);
-
+        }
     }
 
     @Override
