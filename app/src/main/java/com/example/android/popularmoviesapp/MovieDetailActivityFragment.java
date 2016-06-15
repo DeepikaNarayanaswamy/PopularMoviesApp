@@ -92,7 +92,7 @@ public class MovieDetailActivityFragment extends Fragment {
             fetchReviewsForMovieTask.execute(movie.getmId() + "");
 
             ListView reviewListView = (ListView) rootView.findViewById(R.id.review_listview);
-           final ScrollView scrollView = (ScrollView)rootView;
+           /*final ScrollView scrollView = (ScrollView)rootView;
             reviewListView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -109,7 +109,7 @@ public class MovieDetailActivityFragment extends Fragment {
                     return false;
                 }
             });
-
+*/
             reviewListView.setAdapter(movieReviewAdapter);
 
             // here we are going to call fetch trailers to get the trailer videos
@@ -120,7 +120,7 @@ public class MovieDetailActivityFragment extends Fragment {
             fetchTrailersForMovieTask.execute(movie.getmId() + "");
 
             ListView trailerListView = (ListView) rootView.findViewById(R.id.trailer_listview);
-            trailerListView.setOnTouchListener(new View.OnTouchListener() {
+  /*          trailerListView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     scrollView.requestDisallowInterceptTouchEvent(true);
@@ -137,7 +137,7 @@ public class MovieDetailActivityFragment extends Fragment {
                 }
             });
 
-            trailerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+  */          trailerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     MovieTrailer movie = movieTrailerAdapter.getItem(position);
