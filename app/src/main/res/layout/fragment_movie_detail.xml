@@ -106,11 +106,12 @@
                 android:textSize="18sp"
                 android:textColor="#00eebb"/>
             />
-            <ListView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/trailer_listview"
-                ></ListView>
+                android:id="@+id/trailer_container"
+                android:orientation="vertical"
+                ></LinearLayout>
 
             <TextView
                 android:text="Reviews"
@@ -119,11 +120,12 @@
                 android:textSize="18sp"
                 android:textColor="#ff00aa"/>
             />
-            <ListView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/review_listview"
-                ></ListView>
+                android:id="@+id/review_container"
+                android:orientation="vertical"
+                ></LinearLayout>
         </LinearLayout>
 
 

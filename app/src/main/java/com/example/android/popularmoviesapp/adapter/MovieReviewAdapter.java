@@ -35,6 +35,7 @@ public class MovieReviewAdapter extends ArrayAdapter<MovieReview> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.review_item, parent, false);
         }
+
         ViewHolder holder = new ViewHolder(convertView);
         holder.contentView.setText(reivew.getMreviewContent());
         holder.authorView.setText(reivew.getMauthor());

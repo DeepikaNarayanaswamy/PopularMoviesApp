@@ -32,10 +32,13 @@ public class FetchReviewsForMovieTask extends AsyncTask<
     @Override
     protected void onPostExecute(List<MovieReview> movieReviews) {
 
+        if (mmovieReviewAdapter != null) {
+            for (MovieReview mReview : movieReviews) {
+                mmovieReviewAdapter.add(mReview);
+            }
 
-        for (MovieReview mReview : movieReviews){
-            mmovieReviewAdapter.add(mReview);
+            mmovieReviewAdapter.notifyDataSetChanged();
         }
-        mmovieReviewAdapter.notifyDataSetChanged();
     }
+
 }

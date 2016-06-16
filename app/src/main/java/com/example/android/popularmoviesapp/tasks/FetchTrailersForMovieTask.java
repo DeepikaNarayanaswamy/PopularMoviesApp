@@ -33,9 +33,11 @@ public class FetchTrailersForMovieTask extends AsyncTask<
 
     @Override
     protected void onPostExecute(List<MovieTrailer> movieTrailers) {
-        for (MovieTrailer trailer : movieTrailers){
-            movieTrailerAdapter.add(trailer);
+        if (movieTrailerAdapter != null) {
+            for (MovieTrailer trailer : movieTrailers) {
+                movieTrailerAdapter.add(trailer);
+            }
+            movieTrailerAdapter.notifyDataSetChanged();
         }
-        movieTrailerAdapter.notifyDataSetChanged();
     }
 }

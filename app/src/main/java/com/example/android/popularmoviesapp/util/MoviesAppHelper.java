@@ -301,7 +301,7 @@ public class MoviesAppHelper {
 
 
     public static List<MovieTrailer> getMovieTrailers(String movieTrailerJsonStr){
-        List<MovieTrailer> movieReviews = new ArrayList<MovieTrailer>();
+        List<MovieTrailer> movieTrailers = new ArrayList<MovieTrailer>();
         try {
             if (movieTrailerJsonStr != null) {
                 JSONObject forecastJson = new JSONObject(movieTrailerJsonStr);
@@ -314,15 +314,15 @@ public class MoviesAppHelper {
                     trailer.setVideoName(trailerObject.getString(MoviesAppConstants.VIDEO_NAME));
                     trailer.setVideoKey(trailerObject.getString(MoviesAppConstants.VIDEO_KEY));
                     Log.v("Video id", trailer.getVideoId());
-                    movieReviews.add(trailer);
+                    movieTrailers.add(trailer);
                 }
 
             }
         }catch (Exception e){
             Log.e("Error:",e.getMessage());
         }
-        Log.v("#reviews=",movieReviews.size()+"");
-        return movieReviews;
+        Log.v("#trailers=",movieTrailers.size()+"");
+        return movieTrailers;
 
     }
     public static void setListViewHeightBasedOnChildren(ListView listView) {
