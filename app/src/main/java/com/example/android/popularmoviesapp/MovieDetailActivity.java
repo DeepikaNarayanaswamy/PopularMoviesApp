@@ -28,6 +28,10 @@ public class MovieDetailActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (savedInstanceState == null){
+            getSupportFragmentManager().beginTransaction().add(R.id.movie_detail_container,new MovieDetailActivityFragment()).commit();
+        }
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
