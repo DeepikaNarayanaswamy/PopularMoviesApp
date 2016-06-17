@@ -47,6 +47,13 @@ public class MoviesFragment extends Fragment   {
     public MoviesFragment() {
     }
 
+    public interface Callback {
+        /**
+         * DetailFragmentCallback for when an item has been selected.
+         */
+        public void onItemSelected(Movie movie);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,11 +70,14 @@ public class MoviesFragment extends Fragment   {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Movie movie = moviesAdapter.getItem(position);
                     Log.i(LOG_TAG,"Posterpath : "+movie.getmPosterPath() );
+                    ((Callback) getActivity()).onItemSelected(movie);
 
+                    /*
                     Intent invokeDetailActivity = new Intent(getActivity(),MovieDetailActivity.class).
                             putExtra("MovieObject",movie);
 
                     startActivity(invokeDetailActivity);
+                    */
                 }
             }
         );

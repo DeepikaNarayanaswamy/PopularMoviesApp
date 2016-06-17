@@ -27,6 +27,8 @@ public class MovieDetailActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        System.out.println("MovieDetailActivity"+getIntent().getExtras().getParcelable("MovieObject"));
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (savedInstanceState == null){
             getSupportFragmentManager().beginTransaction().add(R.id.movie_detail_container,new MovieDetailActivityFragment()).commit();
