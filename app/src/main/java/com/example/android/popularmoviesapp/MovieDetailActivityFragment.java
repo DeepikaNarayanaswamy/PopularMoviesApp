@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -157,7 +158,8 @@ public class MovieDetailActivityFragment extends Fragment {
 
                 // ListView trailerListView = (ListView) rootView.findViewById(R.id.trailer_listview);
 
-                LinearLayout trailerContainer = (LinearLayout) rootView.findViewById(R.id.trailer_container);
+                HorizontalScrollView trailerContainer = (HorizontalScrollView) rootView.findViewById(R.id.trailer_container);
+                LinearLayout trailerLayout = (LinearLayout) rootView.findViewById(R.id.trailer_linear);
                 try {
                     final List<MovieTrailer> movieTrailers = fetchTrailersForMovieTask.get();
                     for (int i = 0; i < movieTrailers.size(); i++) {
@@ -176,9 +178,9 @@ public class MovieDetailActivityFragment extends Fragment {
                                 watchYoutubeVideo(trailer.getVideoKey());
                             }
                         });
-                        trailerContainer.addView(view);
+                        trailerLayout.addView(view);
                     }
-
+                    //trailerContainer.addView(trailerLayout);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     ;
