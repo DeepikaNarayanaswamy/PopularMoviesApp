@@ -61,11 +61,12 @@ public class MovieDetailActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false);
-        Intent intent = getActivity().getIntent();
-        Bundle extras;
+        Bundle extras = null;
+      /*  Intent intent = getActivity().getIntent();
+        Bundle extras = null;
         // for phone
         extras = intent.getExtras();
-        // for tablet
+      */  // for tablet
         if (extras == null) {
             System.out.println("for tablet !!");
             extras = getArguments();

@@ -15,7 +15,7 @@
     <LinearLayout
         android:id="@+id/movieTitlePlaceHolder"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="200dp"
         android:background="@color/colorPrimaryDark"
         android:orientation="horizontal"
         >
@@ -25,12 +25,12 @@
             style="@style/MovieTitle"
             android:layout_weight="1"
             android:layout_width="0dp" />
-        <ImageView
+      <!--  <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_margin="10dp"
 
-
-            android:id="@+id/favorite_icon"/>
+            android:id="@+id/favorite_icon"/>-->
     </LinearLayout>
     <!-- 2nd level, horizontal orientation, left image and right the details -->
     <LinearLayout
@@ -51,7 +51,9 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="#FFF222">
+
 
             <TextView
                 android:id="@+id/movie_release_year"
@@ -79,6 +81,12 @@
                 android:textColor="#25383C"
                 android:textSize="20sp" />
             />
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+
+                android:id="@+id/favorite_icon"/>
         </LinearLayout>
     </LinearLayout>
         <LinearLayout

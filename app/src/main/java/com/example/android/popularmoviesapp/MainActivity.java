@@ -2,6 +2,7 @@ package com.example.android.popularmoviesapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -80,8 +81,9 @@ public class MainActivity extends AppCompatActivity implements MoviesFragment.Ca
                     .replace(R.id.movie_detail_container, fragment, DETAILFRAGMENT_TAG)
                     .commit();
         }else{
+            System.out.println("On item selected = "+movie);
             Bundle args = new Bundle();
-            args.putParcelable("MovieObject",movie);
+            args.putParcelable("MovieObject", movie);
 
             Intent invokeDetailActivity = new Intent(this,MovieDetailActivity.class).putExtras(args);
 
