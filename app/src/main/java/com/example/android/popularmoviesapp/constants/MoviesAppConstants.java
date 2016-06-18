@@ -28,5 +28,11 @@ public class MoviesAppConstants {
     public static final String TRAILER = "Trailer";
     public static final String VIDEO_NAME = "name";
     public static final String VIDEO_KEY = "key";
+    public static final String MOVIE_OBJECT = "MovieObject";
+    public static final String YOUTUBE_THUMBNAIL = "http://img.youtube.com/vi/";
+    public static final String REMOVE_FAVORITE = "Removed as favorite";
+    public static final String MARK_FAVORITE = "Marked as favorite";
+    public static final String YOUTUBE_WATCH = "http://www.youtube.com/watch?v=";
+
 
 }

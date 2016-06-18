@@ -12,11 +12,13 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.android.popularmoviesapp.constants.MoviesAppConstants;
 import com.example.android.popularmoviesapp.pojo.Movie;
 
 public class MainActivity extends AppCompatActivity implements MoviesFragment.Callback {
     boolean mTwoPane;
     private static final String DETAILFRAGMENT_TAG = "DFTAG";
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,24 +72,22 @@ public class MainActivity extends AppCompatActivity implements MoviesFragment.Ca
     @Override
     public void onItemSelected(Movie movie) {
         MovieDetailActivityFragment fragment = new MovieDetailActivityFragment();
-        Log.v("onItemSelected","Item selected");
-        System.out.println("Twopane value = "+mTwoPane);
+        // For a tablet, start the fragment automatically so that in the 2nd col. the details are displayed.
         if (mTwoPane){
-            Log.v("TwoPane","Movieobject");
+
             Bundle args = new Bundle();
-            args.putParcelable("MovieObject",movie);
+            args.putParcelable(MoviesAppConstants.MOVIE_OBJECT,movie);
             fragment.setArguments(args);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.movie_detail_container, fragment, DETAILFRAGMENT_TAG)
                     .commit();
-        }else{
-            System.out.println("On item selected = "+movie);
+        }
+        // For a phone start the new activity
+        else{
             Bundle args = new Bundle();
-            args.putParcelable("MovieObject", movie);
+            args.putParcelable(MoviesAppConstants.MOVIE_OBJECT, movie);
 
             Intent invokeDetailActivity = new Intent(this,MovieDetailActivity.class).putExtras(args);
-
-
             startActivity(invokeDetailActivity);
         }
     }

@@ -72,12 +72,6 @@ public class MoviesFragment extends Fragment   {
                     Log.i(LOG_TAG,"Posterpath : "+movie.getmPosterPath() );
                     ((Callback) getActivity()).onItemSelected(movie);
 
-                    /*
-                    Intent invokeDetailActivity = new Intent(getActivity(),MovieDetailActivity.class).
-                            putExtra("MovieObject",movie);
-
-                    startActivity(invokeDetailActivity);
-                    */
                 }
             }
         );
@@ -92,7 +86,7 @@ public class MoviesFragment extends Fragment   {
     public void getMovies() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String sort_by = prefs.getString(getString(R.string.pref_sort_by_key), getString(R.string.pref_value_Popular));
-        Log.v("MoviesFragment", "getMovies");
+        Log.v(LOG_TAG, "getMovies");
 
 
         if (sort_by.equals("favorite")) {

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".view.DetailsFragment"
 >
-    <!--Scroll view can have only one direct child Embedding inside a linear layout vertical orientation -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,9 +15,11 @@
     <LinearLayout
         android:id="@+id/movieTitlePlaceHolder"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="100dp"
         android:background="@color/colorPrimaryDark"
         android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         >
 
         <TextView
@@ -25,12 +27,7 @@
             style="@style/MovieTitle"
             android:layout_weight="1"
             android:layout_width="0dp" />
-      <!--  <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
 
-            android:id="@+id/favorite_icon"/>-->
     </LinearLayout>
     <!-- 2nd level, horizontal orientation, left image and right the details -->
     <LinearLayout
@@ -44,7 +41,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_below="@id/movieTitlePlaceHolder"
-        android:layout_marginTop="10dp"
+
         android:scaleType="centerCrop" />
 
 
@@ -52,7 +49,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#FFF222">
+            android:background="#6a1b9a"
+            android:layout_weight="2"
+            >
 
 
             <TextView
@@ -64,8 +63,8 @@
                 android:layout_marginTop="10dp"
 
 
-                android:textColor="#25383C"
-                android:textSize="20sp"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
                 />
 
 
@@ -78,9 +77,10 @@
                 android:layout_marginLeft="30dp"
 
                 android:layout_toRightOf="@id/movie_thumbnail"
-                android:textColor="#25383C"
-                android:textSize="20sp" />
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
             />
+            <!-- favorite button -->
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -123,6 +123,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:orientation="horizontal"
                     android:id="@+id/trailer_linear"></LinearLayout>
             </HorizontalScrollView>
 

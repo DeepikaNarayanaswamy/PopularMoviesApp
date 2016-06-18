@@ -10,8 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class MovieDetailActivity extends AppCompatActivity {
+import com.example.android.popularmoviesapp.constants.MoviesAppConstants;
 
+public class MovieDetailActivity extends AppCompatActivity {
+    public static final String LOG_TAG = MovieDetailActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,15 +21,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        System.out.println("MovieDetailActivity"+getIntent().getExtras().getParcelable("MovieObject"));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (savedInstanceState == null){
