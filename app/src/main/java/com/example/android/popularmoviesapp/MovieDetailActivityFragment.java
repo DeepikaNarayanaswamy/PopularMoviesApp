@@ -5,6 +5,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -141,6 +142,9 @@ public class MovieDetailActivityFragment extends Fragment {
                 });
 
             }
+        }else{
+            rootView.findViewById(R.id.movieTitlePlaceHolder).setBackgroundColor(Color.TRANSPARENT);
+            rootView.findViewById(R.id.movie_details).setBackgroundColor(Color.TRANSPARENT);
         }
 
         return rootView;

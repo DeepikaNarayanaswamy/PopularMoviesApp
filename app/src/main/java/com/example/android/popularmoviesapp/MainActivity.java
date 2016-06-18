@@ -1,7 +1,9 @@
 package com.example.android.popularmoviesapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,6 +27,11 @@ public class MainActivity extends AppCompatActivity implements MoviesFragment.Ca
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String sort_by = prefs.getString(getString(R.string.pref_sort_by_key), getString(R.string.pref_value_Popular));
+        Log.v(LOG_TAG,sort_by);
+
+        getSupportActionBar().setTitle(sort_by);
         if (findViewById(R.id.movie_detail_container) != null) {
             // The detail container view will be present only in the large-screen layouts
             // (res/layout-sw600dp). If this view is present, then the activity should be

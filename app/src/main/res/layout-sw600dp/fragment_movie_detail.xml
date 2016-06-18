@@ -1,0 +1,149 @@
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.DetailsFragment"
+>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <!--Title is linear layout -->
+    <LinearLayout
+        android:id="@+id/movieTitlePlaceHolder"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        >
+
+        <TextView
+            android:id="@+id/movie_title"
+            style="@style/MovieTitle"
+            android:layout_weight="1"
+            android:layout_width="0dp" />
+
+    </LinearLayout>
+    <!-- 2nd level, horizontal orientation, left image and right the details -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#6a1b9a"
+        android:id="@+id/movie_details"
+        android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/movie_thumbnail"
+
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_below="@id/movieTitlePlaceHolder"
+
+        android:scaleType="centerCrop" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="2"
+            >
+
+
+            <TextView
+                android:id="@+id/movie_release_year"
+                android:paddingLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+
+
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                />
+
+
+            <TextView
+                android:id="@+id/movie_user_rating"
+                android:paddingLeft="5dp"
+                android:paddingBottom="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+
+                android:layout_toRightOf="@id/movie_thumbnail"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+            />
+            <!-- favorite button -->
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+
+                android:id="@+id/favorite_icon"/>
+        </LinearLayout>
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:text="Overview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="#ff0000"/>
+            />
+            <TextView
+                android:id="@+id/movie_overview"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"/>
+            />
+            <TextView
+                android:text="Trailers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="#00eebb"/>
+            />
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/trailer_container"
+                android:orientation="horizontal"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:id="@+id/trailer_linear"></LinearLayout>
+            </HorizontalScrollView>
+
+            <TextView
+                android:text="Reviews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="#ff00aa"/>
+            />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/review_container"
+                android:orientation="vertical"
+                ></LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

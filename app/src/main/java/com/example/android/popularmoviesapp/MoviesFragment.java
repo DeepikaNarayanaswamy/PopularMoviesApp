@@ -12,6 +12,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,22 +63,19 @@ public class MoviesFragment extends Fragment   {
         final ArrayList<Movie> movies = new ArrayList<>();
         moviesAdapter = new MoviesAdapter(getActivity(), movies);
 
-
         // Get a reference to the ListView, and attach this adapter to it.
         GridView gridView = (GridView) rootView.findViewById(R.id.movies_grid);
         gridView.setAdapter(moviesAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Movie movie = moviesAdapter.getItem(position);
-                    Log.i(LOG_TAG,"Posterpath : "+movie.getmPosterPath() );
-                    ((Callback) getActivity()).onItemSelected(movie);
+                                            @Override
+                                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                                Movie movie = moviesAdapter.getItem(position);
+                                                Log.i(LOG_TAG, "Posterpath : " + movie.getmPosterPath());
+                                                ((Callback) getActivity()).onItemSelected(movie);
 
-                }
-            }
+                                            }
+                                        }
         );
-
-
 
 
 
@@ -101,6 +100,15 @@ public class MoviesFragment extends Fragment   {
     public void onStart() {
         super.onStart();
         getMovies();
+
+        AppCompatActivity activity = (AppCompatActivity)getActivity();
+        Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
+        activity.setSupportActionBar(toolbar);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        String sort_by = prefs.getString(getString(R.string.pref_sort_by_key), getString(R.string.pref_value_Popular));
+        Log.v(LOG_TAG, sort_by);
+
+        activity.getSupportActionBar().setTitle(sort_by);
     }
 
     private class FetchMoviesTask extends AsyncTask<String, Void, List<Movie>> {
