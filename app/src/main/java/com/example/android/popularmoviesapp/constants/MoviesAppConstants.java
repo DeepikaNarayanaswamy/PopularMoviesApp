@@ -33,6 +33,10 @@ public class MoviesAppConstants {
     public static final String REMOVE_FAVORITE = "Removed as favorite";
     public static final String MARK_FAVORITE = "Marked as favorite";
     public static final String YOUTUBE_WATCH = "http://www.youtube.com/watch?v=";
+    public static final String FAVORITE_MOVIES = "Favorite Movies";
+    public static final String POPULAR_MOVIES = "Popular Movies";
+    public static final String TOPRATED_MOVIES = "Toprated Movies";
+
 
 
 }

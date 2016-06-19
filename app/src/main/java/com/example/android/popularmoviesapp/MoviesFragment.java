@@ -87,7 +87,7 @@ public class MoviesFragment extends Fragment   {
         String sort_by = prefs.getString(getString(R.string.pref_sort_by_key), getString(R.string.pref_value_Popular));
         Log.v(LOG_TAG, "getMovies");
 
-
+        // Fetch the favorite movies from DB
         if (sort_by.equals("favorite")) {
             fetchFavoriteMovies();
         }else {
@@ -106,9 +106,18 @@ public class MoviesFragment extends Fragment   {
         activity.setSupportActionBar(toolbar);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
         String sort_by = prefs.getString(getString(R.string.pref_sort_by_key), getString(R.string.pref_value_Popular));
+        // Change the title of the main activity based on the sort preference
+
+        if (sort_by.equals("favorite")){
+            activity.getSupportActionBar().setTitle(MoviesAppConstants.FAVORITE_MOVIES);
+        }else if (sort_by.equals("popular")){
+            activity.getSupportActionBar().setTitle(MoviesAppConstants.POPULAR_MOVIES);
+        }else if (sort_by.equals("top_rated")){
+            activity.getSupportActionBar().setTitle(MoviesAppConstants.TOPRATED_MOVIES);
+        }
         Log.v(LOG_TAG, sort_by);
 
-        activity.getSupportActionBar().setTitle(sort_by);
+        //activity.getSupportActionBar().setTitle(sort_by);
     }
 
     private class FetchMoviesTask extends AsyncTask<String, Void, List<Movie>> {

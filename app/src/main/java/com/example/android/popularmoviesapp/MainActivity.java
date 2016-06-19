@@ -30,8 +30,14 @@ public class MainActivity extends AppCompatActivity implements MoviesFragment.Ca
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String sort_by = prefs.getString(getString(R.string.pref_sort_by_key), getString(R.string.pref_value_Popular));
         Log.v(LOG_TAG,sort_by);
+        if (sort_by.equals(R.string.pref_value_favorite)){
+            getSupportActionBar().setTitle(MoviesAppConstants.FAVORITE_MOVIES);
+        }else if (sort_by.equals(R.string.pref_value_Popular)){
+          getSupportActionBar().setTitle(MoviesAppConstants.POPULAR_MOVIES);
+        }else if (sort_by.equals(R.string.pref_value_toprated)){
+            getSupportActionBar().setTitle(MoviesAppConstants.TOPRATED_MOVIES);
+        }
 
-        getSupportActionBar().setTitle(sort_by);
         if (findViewById(R.id.movie_detail_container) != null) {
             // The detail container view will be present only in the large-screen layouts
             // (res/layout-sw600dp). If this view is present, then the activity should be
