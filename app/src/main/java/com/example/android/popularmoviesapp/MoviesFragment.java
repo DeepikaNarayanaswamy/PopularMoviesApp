@@ -59,7 +59,7 @@ public class MoviesFragment extends Fragment   {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // For retaining the current screen on orientation change
+        // For retaining the current screen on orientation change aa
         setRetainInstance(true);
     }
 
