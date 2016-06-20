@@ -17,6 +17,7 @@ public class FetchTrailersForMovieTask extends AsyncTask<
     @Override
     protected List<MovieTrailer> doInBackground(String... params) {
         return MoviesAppHelper.fetchMovieTrailers(params[0]);
+
     }
 
 

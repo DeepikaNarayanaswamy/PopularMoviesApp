@@ -26,6 +26,7 @@ import com.example.android.popularmoviesapp.pojo.MovieReview;
 import com.example.android.popularmoviesapp.pojo.MovieTrailer;
 import com.example.android.popularmoviesapp.tasks.FetchReviewsForMovieTask;
 import com.example.android.popularmoviesapp.tasks.FetchTrailersForMovieTask;
+import com.example.android.popularmoviesapp.tasks.InsertFavoriteMoviesTask;
 import com.example.android.popularmoviesapp.util.MoviesAppHelper;
 import com.squareup.picasso.Picasso;
 
@@ -87,20 +88,11 @@ public class MovieDetailActivityFragment extends Fragment {
         }
     }
 
-       // Set the movie as favorite
+       // Set the movie as favorite. INovke async task to run it in the background.
     private void setAsFavorite (View v,Movie movie){
+        InsertFavoriteMoviesTask task = new InsertFavoriteMoviesTask(getContext());
+        task.execute(movie);
 
-            ContentValues data = new ContentValues();
-            data.put(MoviesContract.MoviesEntry.COL_MOVIE_ID, movie.getmId());
-            data.put(MoviesContract.MoviesEntry.COL_MOVIE_TITLE, movie.getmOriginalTitle());
-            data.put(MoviesContract.MoviesEntry.COL_MOVIE_OVERVIEW, movie.getmOverview());
-            data.put(MoviesContract.MoviesEntry.COL_MOVIE_RELEASE_DATE, movie.getmReleaseDate());
-            data.put(MoviesContract.MoviesEntry.COL_MOVIE_RATING, movie.getmVoteAverage());
-            data.put(MoviesContract.MoviesEntry.COL_POSTER_PATH, movie.getmPosterPath());
-            Uri uri = getActivity().getContentResolver().insert(MoviesContract.MoviesEntry.CONTENT_URI, data);
-            Long id = ContentUris.parseId(uri);
-            Log.v(LOG_TAG+"Inserted movie id =", id.toString());
-            Toast.makeText(getContext(),MoviesAppConstants.MARK_FAVORITE,Toast.LENGTH_SHORT).show();
         }
 
 

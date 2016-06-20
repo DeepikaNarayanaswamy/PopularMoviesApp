@@ -16,6 +16,7 @@ public class FetchReviewsForMovieTask extends AsyncTask<
 
     @Override
     protected List<MovieReview> doInBackground(String... params) {
+
         return MoviesAppHelper.fetchMovieReviews(params[0]);
 
     }
