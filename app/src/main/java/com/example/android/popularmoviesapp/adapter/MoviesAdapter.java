@@ -54,13 +54,23 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.movie_item, parent, false);
         }
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.movie_image);
+        MovieImageViewHolder holder = new MovieImageViewHolder(convertView);
+        convertView.setTag(holder);
 
         Picasso.with(getContext())
                 .load(MoviesAppConstants.IMAGE_URL + MoviesAppConstants.IMAGE_SIZE + movieChosen.getmPosterPath())
-            .into(imageView);
+            .into(holder.movieImageView
+            );
         return convertView;
 
 
+    }
+
+
+    private class MovieImageViewHolder{
+        ImageView movieImageView;
+        public MovieImageViewHolder(View view){
+            movieImageView = (ImageView) view.findViewById(R.id.movie_image);
+        }
     }
 }
