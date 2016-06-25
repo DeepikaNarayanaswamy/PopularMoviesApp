@@ -14,27 +14,23 @@ import com.example.android.popularmoviesapp.pojo.Movie;
 /**
  * Created by P01242 on 6/20/2016.
  */
-public class InsertFavoriteMoviesTask extends AsyncTask<Movie,Void,Long> {
+public class InsertFavoriteMoviesTask extends AsyncTask<Movie,Void,Integer> {
 
     Context mContext;
 
     @Override
-    protected Long doInBackground(Movie... movie) {
+    protected Integer doInBackground(Movie... movie) {
 
         ContentValues data = new ContentValues();
-        long id = 0;
+        int nrows = -1;
         if (movie[0] != null) {
+            String [] selectionArgs = {movie[0].getmId()+""};
             data.put(MoviesContract.MoviesEntry.COL_MOVIE_ID, movie[0].getmId());
-            data.put(MoviesContract.MoviesEntry.COL_MOVIE_TITLE, movie[0].getmOriginalTitle());
-            data.put(MoviesContract.MoviesEntry.COL_MOVIE_OVERVIEW, movie[0].getmOverview());
-            data.put(MoviesContract.MoviesEntry.COL_MOVIE_RELEASE_DATE, movie[0].getmReleaseDate());
-            data.put(MoviesContract.MoviesEntry.COL_MOVIE_RATING, movie[0].getmVoteAverage());
-            data.put(MoviesContract.MoviesEntry.COL_POSTER_PATH, movie[0].getmPosterPath());
+            data.put(MoviesContract.MoviesEntry.COL_IS_FAVORITE, 1);
+            nrows = mContext.getContentResolver().update(MoviesContract.MoviesEntry.CONTENT_URI.buildUpon().appendPath(MoviesContract.MoviesEntry.FAVORITE).build(), data, MoviesContract.MoviesEntry.COL_MOVIE_ID +" = ?",selectionArgs);
 
-            Uri uri = mContext.getContentResolver().insert(MoviesContract.MoviesEntry.CONTENT_URI, data);
-            id = ContentUris.parseId(uri);
         }
-        return new Long(id);
+        return nrows;
     }
 
     public InsertFavoriteMoviesTask(Context context){
@@ -42,8 +38,8 @@ public class InsertFavoriteMoviesTask extends AsyncTask<Movie,Void,Long> {
     }
 
     @Override
-    protected void onPostExecute(Long id) {
-        if (id != -1){
+    protected void onPostExecute(Integer rowsUpdated) {
+        if (rowsUpdated != -1){
             Toast.makeText(mContext, MoviesAppConstants.MARK_FAVORITE, Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(mContext,"Error", Toast.LENGTH_SHORT).show();

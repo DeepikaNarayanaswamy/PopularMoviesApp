@@ -12,8 +12,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MovieDBHelper extends SQLiteOpenHelper {
     public static final String LOG_TAG = MovieDBHelper.class.getSimpleName();
     public static final String DB_NAME = "movie.db";
-    // Previously forgot to define poster path column
-    public static final int DB_VERSION = 2;
+    //Added 3 columns for favorite,toprated,popular
+    public static final int DB_VERSION = 3;
 
     public MovieDBHelper (Context context){
         super(context,DB_NAME,null,DB_VERSION);
@@ -30,7 +30,10 @@ public class MovieDBHelper extends SQLiteOpenHelper {
                 + MoviesContract.MoviesEntry.COL_MOVIE_OVERVIEW + " TEXT NOT NULL, "
                 + MoviesContract.MoviesEntry.COL_MOVIE_RATING + " TEXT NOT NULL,"
                 + MoviesContract.MoviesEntry.COL_MOVIE_RELEASE_DATE+ " TEXT NOT NULL,"
-                + MoviesContract.MoviesEntry.COL_POSTER_PATH+" TEXT NOT NULL"
+                + MoviesContract.MoviesEntry.COL_POSTER_PATH+" TEXT NOT NULL,"
+                + MoviesContract.MoviesEntry.COL_IS_FAVORITE+" INTEGER, "
+                + MoviesContract.MoviesEntry.COL_IS_TOPRATED+" INTEGER, "
+                + MoviesContract.MoviesEntry.COL_IS_POPULAR + " INTEGER"
                 + ")";
         sqLiteDatabase.execSQL(SQL_CREATE_MOVIE_TABLE);
 

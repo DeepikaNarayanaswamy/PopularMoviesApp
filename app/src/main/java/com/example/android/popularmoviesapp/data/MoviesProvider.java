@@ -4,6 +4,7 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 
@@ -17,6 +18,10 @@ public class MoviesProvider extends ContentProvider{
     static UriMatcher sUriMatcher = buildUriMatcher();
     public static  final int MOVIES = 100;
     public static final int MOVIE_ID = 101;
+
+    public static final int MOVIE_favorite = 102;
+    public static final int MOVIE_POPULAR = 103;
+    public static final int MOVIE_TOPRATED = 104;
     @Override
     public boolean onCreate() {
         Log.v(LOG_TAG,"onCreateMethod");
@@ -73,6 +78,9 @@ public class MoviesProvider extends ContentProvider{
                                break;
             default:throw new UnsupportedOperationException("Failed to insert into table"+uri);
         }
+
+        cursor.setNotificationUri(getContext().getContentResolver(),uri);
+        cursor.close();
         return cursor;
     }
 
@@ -91,17 +99,69 @@ public class MoviesProvider extends ContentProvider{
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        return 0;
+        final SQLiteDatabase db = movieDBHelper.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        int nrows = -1;
+        switch (sUriMatcher.match(uri)){
+
+            case MOVIES : nrows = db.update(MoviesContract.MoviesEntry.TABLE_MOVIES,values,selection,selectionArgs);
+                break;
+            case MOVIE_favorite: nrows = db.update(MoviesContract.MoviesEntry.TABLE_MOVIES,values,selection,selectionArgs);
+                break;
+            case MOVIE_POPULAR: nrows = db.update(MoviesContract.MoviesEntry.TABLE_MOVIES,values,selection,selectionArgs);
+                break;
+            case MOVIE_TOPRATED: nrows = db.update(MoviesContract.MoviesEntry.TABLE_MOVIES,values,selection,selectionArgs);
+                Log.v(LOG_TAG,"No of rows updated = "+nrows);
+                break;
+
+
+
+        }
+        if (nrows != 0)
+           getContext().getContentResolver().notifyChange(uri,null);
+        return nrows;
+
     }
 
     public static UriMatcher buildUriMatcher(){
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         // The uri will be used to query the full table and get all the records
         uriMatcher.addURI(MoviesContract.CONTENT_AUTHORITY,MoviesContract.PATH_MOVIE,MOVIES);
-        uriMatcher.addURI(MoviesContract.CONTENT_AUTHORITY,MoviesContract.PATH_MOVIE+"/*",MOVIE_ID);
+
+        uriMatcher.addURI(MoviesContract.CONTENT_AUTHORITY,MoviesContract.PATH_MOVIE+"/"+MoviesContract.MoviesEntry.FAVORITE,MOVIE_favorite);
+        uriMatcher.addURI(MoviesContract.CONTENT_AUTHORITY,MoviesContract.PATH_MOVIE+"/"+MoviesContract.MoviesEntry.TOP_RATED,MOVIE_TOPRATED);
+        uriMatcher.addURI(MoviesContract.CONTENT_AUTHORITY,MoviesContract.PATH_MOVIE+"/"+MoviesContract.MoviesEntry.POPULAR,MOVIE_POPULAR);
 
         return uriMatcher;
 
     }
 
+    @Override
+    public int bulkInsert(Uri uri, ContentValues[] values) {
+        final SQLiteDatabase db = movieDBHelper.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        Log.v("WP BULK Inserting",uri.toString());
+        switch (match) {
+            case MOVIES:
+                db.beginTransaction();
+                int returnCount = 0;
+                try {
+                    for (ContentValues value : values) {
+
+                        long _id = db.insert(MoviesContract.MoviesEntry.TABLE_MOVIES, null, value);
+                        if (_id != -1) {
+                            returnCount++;
+                        }
+                    }
+                    db.setTransactionSuccessful();
+                } finally {
+                    db.endTransaction();
+                }
+                getContext().getContentResolver().notifyChange(uri, null);
+                return returnCount;
+            default:
+                return super.bulkInsert(uri, values);
+        }
+
+    }
 }

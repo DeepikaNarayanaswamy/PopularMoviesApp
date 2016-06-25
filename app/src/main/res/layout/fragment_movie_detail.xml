@@ -38,8 +38,8 @@
     <ImageView
         android:id="@+id/movie_thumbnail"
 
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_below="@id/movieTitlePlaceHolder"
 
         android:scaleType="centerCrop" />

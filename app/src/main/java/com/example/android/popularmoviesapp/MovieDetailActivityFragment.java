@@ -100,7 +100,7 @@ public class MovieDetailActivityFragment extends Fragment {
     // Check if the given movie is already marked as favorite
     private boolean checkFavorite(Movie movie){
         String [] selectionArgs = {movie.getmId()+""};
-        Cursor cursor = getContext().getContentResolver().query(MoviesContract.MoviesEntry.CONTENT_URI, new String[]{MoviesContract.MoviesEntry._ID}, MoviesContract.MoviesEntry.COL_MOVIE_ID + " = ?", selectionArgs, null);
+        Cursor cursor = getContext().getContentResolver().query(MoviesContract.MoviesEntry.CONTENT_URI, new String[]{MoviesContract.MoviesEntry._ID}, MoviesContract.MoviesEntry.COL_MOVIE_ID + " = ? AND " + MoviesContract.MoviesEntry.COL_IS_FAVORITE + " = 1", selectionArgs, null);
         if (cursor.moveToFirst()){
             return true;
         }
@@ -110,7 +110,9 @@ public class MovieDetailActivityFragment extends Fragment {
     // Remove the movie from favorite list
     private void  removeAsFavorite(Movie movie){
         String [] selectionArgs = {movie.getmId()+""};
-        int deletedRows = getActivity().getContentResolver().delete(MoviesContract.MoviesEntry.CONTENT_URI, MoviesContract.MoviesEntry.COL_MOVIE_ID + "= ?", selectionArgs);
+        ContentValues data = new ContentValues();
+        data.put(MoviesContract.MoviesEntry.COL_IS_FAVORITE,0);
+         getActivity().getContentResolver().update(MoviesContract.MoviesEntry.CONTENT_URI.buildUpon().appendPath(MoviesContract.MoviesEntry.FAVORITE).build(), data, MoviesContract.MoviesEntry.COL_MOVIE_ID + "= ?", selectionArgs);
 
         Toast.makeText(getContext(), MoviesAppConstants.REMOVE_FAVORITE, Toast.LENGTH_SHORT).show();
 

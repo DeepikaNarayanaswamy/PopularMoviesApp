@@ -18,6 +18,7 @@ public class MoviesContract {
 
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
     public static final String PATH_MOVIE = "movie";
+
     // This class is used to define the table in the database
     public static final class MoviesEntry implements BaseColumns{
 
@@ -29,6 +30,9 @@ public class MoviesContract {
         public static final String COL_MOVIE_OVERVIEW  = "overview";
         public static final String COL_MOVIE_RATING  = "rating";
         public static final String COL_MOVIE_RELEASE_DATE  = "release_date";
+        public static final String COL_IS_POPULAR  = "is_popular";
+        public static final String COL_IS_TOPRATED  = "is_toprated";
+        public static final String COL_IS_FAVORITE  = "is_favorite";
 
         // To get the location of the table -> db location + table name
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_MOVIE).build();
@@ -36,6 +40,10 @@ public class MoviesContract {
         // Returns multiple entries
         public static final String CONTENT_DIR_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + TABLE_MOVIES;
         public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + TABLE_MOVIES;
+
+        public  static final String FAVORITE = "favorite";
+        public static final String TOP_RATED = "top_Rated";
+        public static final String POPULAR = "popular";
 
         // This method will return the URI of the newly inserted record
         public static Uri buildMoviesURI(long id){
