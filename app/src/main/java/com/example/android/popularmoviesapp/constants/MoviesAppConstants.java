@@ -6,7 +6,7 @@ package com.example.android.popularmoviesapp.constants;
 public class MoviesAppConstants {
     public static final String MOVIEDB_URL = "http://api.themoviedb.org/3/movie/";
     public static final String IMAGE_SIZE = "w185";
-    public static final String API_KEY_VALUE = "ffcb3348efa7f7b0c5b36d3b7c3b271f";
+    public static final String API_KEY_VALUE = "";
     public static final String IMAGE_URL = "http://image.tmdb.org/t/p/";
     public static final String MOVIE_TITLE = "MOVIE_TITLE";
     public static final String MOVIE_RELEASE_YEAR = "MOVIE_RELEASE_YEAR";
